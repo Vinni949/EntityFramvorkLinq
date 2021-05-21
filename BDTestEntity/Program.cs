@@ -52,14 +52,36 @@ namespace BDTestEntity
                     Console.WriteLine(string.Join(" ", patient.FirstName, patient.LastName, patient.Age, patient.Adress, patient.Complaints));
                 }
             }
-
         }
-       
+        static void AddHospital()
+        {
+            Hospital hospital = new Hospital();
+            hospital.Number = Console.ReadLine();
+            hospital.Address = Console.ReadLine();
+            using (HospitalContext db=new HospitalContext())
+            {
+                Console.WriteLine("Список типов больниц");
+                var hospitalTypes = db.HospitalType.ToList();
+                foreach(var hospitalType in hospitalTypes)
+                {
+                    Console.WriteLine(string.Join(" ", hospitalType.Id, hospitalType.Name));
+                }
+            }
+            hospital.HospitalTypeId = Convert.ToInt32(Console.ReadLine());
+            using (HospitalContext db = new HospitalContext())
+            {
+                db.Hospital.Add(hospital);
+                db.SaveChanges();
+            }
+        }
+
         static void Main(string[] args)
         {
             ReadAllHospital();
             ReadAllPatient();
             ReadAllDoctor();
+            AddHospital();
+
         }
     }
 }
