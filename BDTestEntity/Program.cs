@@ -122,16 +122,31 @@ namespace BDTestEntity
                 db.SaveChanges();
             }
         }
+        
+        static void DellitHospital()
+        {
+            using(HospitalContext db =new HospitalContext())
+            {
+                string hospitalNumber = Console.ReadLine();
+                var hospital = db.Hospital.Where(h => h.Number == hospitalNumber).ToList();
+                if(hospital != null)
+                {
+                    db.Hospital.Remove(hospital[hospital.Count - 1]);
+                    db.SaveChanges();
+                }
+            }
+        }
 
         static void Main(string[] args)
         {
-            //ReadAllHospital();
-            //ReadAllPatient();
-            //ReadAllDoctor();
-            //AddHospital();
-            //AddDoctor();
-            //AddPatient();
+            ReadAllHospital();
+            ReadAllPatient();
+            ReadAllDoctor();
+            AddHospital();
+            AddDoctor();
+            AddPatient();
             AttachingDoctorToHospital();
+            DellitHospital();
         }
     }
 }
