@@ -111,14 +111,27 @@ namespace BDTestEntity
             patient.Complaints = Console.ReadLine();
         }
 
+        static void AttachingDoctorToHospital()
+        {
+            string doc = Console.ReadLine();
+            using (HospitalContext db=new HospitalContext())
+            {
+                var doctors = db.Doctor.FirstOrDefault(d => d.FirstName == doc);
+                doctors.HospitalId = Convert.ToInt32(Console.ReadLine());
+                doctors.Salary = Convert.ToInt32(Console.ReadLine());
+                db.SaveChanges();
+            }
+        }
+
         static void Main(string[] args)
         {
             //ReadAllHospital();
             //ReadAllPatient();
             //ReadAllDoctor();
             //AddHospital();
-            AddDoctor();
-            AddPatient();
+            //AddDoctor();
+            //AddPatient();
+            AttachingDoctorToHospital();
         }
     }
 }
