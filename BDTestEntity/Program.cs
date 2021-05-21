@@ -53,6 +53,7 @@ namespace BDTestEntity
                 }
             }
         }
+
         static void AddHospital()
         {
             Hospital hospital = new Hospital();
@@ -75,13 +76,49 @@ namespace BDTestEntity
             }
         }
 
+        static void AddDoctor()
+        {
+            Doctor doctor = new Doctor();
+            doctor.FirstName = Console.ReadLine();
+            doctor.LastName = Console.ReadLine();
+            doctor.Experience = Convert.ToByte(Console.ReadLine());
+            using (HospitalContext db = new HospitalContext())
+            {
+                Console.WriteLine("Список типов специальностей");
+                var categorys = db.Category.ToList();
+                foreach (var category in categorys)
+                {
+                    Console.WriteLine(string.Join(" ", category.Id, category.TitleСategory));
+                }
+            }
+            doctor.CategoryId = Convert.ToInt32(Console.ReadLine());
+
+            using (HospitalContext db = new HospitalContext())
+            {
+                db.Doctor.Add(doctor);
+                db.SaveChanges();
+            }
+
+        }
+
+        static void AddPatient()
+        {
+            Patient patient = new Patient();
+            patient.FirstName = Console.ReadLine();
+            patient.LastName = Console.ReadLine();
+            patient.Adress = Console.ReadLine();
+            patient.Age = Convert.ToByte(Console.ReadLine());
+            patient.Complaints = Console.ReadLine();
+        }
+
         static void Main(string[] args)
         {
-            ReadAllHospital();
-            ReadAllPatient();
-            ReadAllDoctor();
-            AddHospital();
-
+            //ReadAllHospital();
+            //ReadAllPatient();
+            //ReadAllDoctor();
+            //AddHospital();
+            AddDoctor();
+            AddPatient();
         }
     }
 }
